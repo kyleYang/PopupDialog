@@ -10,15 +10,18 @@ import UIKit
 
 class RatingViewController: UIViewController {
 
-    @IBOutlet weak var cosmosStarRating: CosmosView!
+//    @IBOutlet weak var cosmosStarRating: CosmosView!
 
-    @IBOutlet weak var commentTextField: UITextField!
+//    @IBOutlet weak var commentTextField: UITextField!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        commentTextField.delegate = self
-        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(endEditing)))
+        let subView = UIView(frame: CGRect(x: 0, y:100, width: self.view.frame.size.width, height: self.view.frame.size.height-100))
+        self.view.addSubview(subView)
+        
+//        commentTextField.delegate = self
+//        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(endEditing)))
     }
 
     override func didReceiveMemoryWarning() {

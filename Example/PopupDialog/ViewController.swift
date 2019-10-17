@@ -127,27 +127,27 @@ class ViewController: UIViewController {
     func showCustomDialog(animated: Bool = true) {
 
         // Create a custom view controller
-        let ratingVC = RatingViewController(nibName: "RatingViewController", bundle: nil)
+        let ratingVC = RatingViewController(nibName: nil, bundle: nil)
 
         // Create the dialog
         let popup = PopupDialog(viewController: ratingVC,
                                 buttonAlignment: .horizontal,
-                                transitionStyle: .sheet,
+                                transitionStyle: .bounceDown,
                                 tapGestureDismissal: true,
                                 panGestureDismissal: false)
         
-//        // Create first button
-//        let buttonOne = CancelButton(title: "CANCEL", height: 60) {
-//            self.label.text = "You canceled the rating dialog"
-//        }
-//
-//        // Create second button
-//        let buttonTwo = DefaultButton(title: "RATE", height: 60) {
+        // Create first button
+        let buttonOne = CancelButton(title: "CANCEL", height: 60) {
+            self.label.text = "You canceled the rating dialog"
+        }
+
+        // Create second button
+        let buttonTwo = DefaultButton(title: "RATE", height: 60) {
 //            self.label.text = "You rated \(ratingVC.cosmosStarRating.rating) stars"
-//        }
-//
-//        // Add buttons to dialog
-//        popup.addButtons([buttonOne, buttonTwo])
+        }
+
+        // Add buttons to dialog
+        popup.addButtons([buttonOne, buttonTwo])
 
         // Present dialog
         present(popup, animated: animated, completion: nil)
