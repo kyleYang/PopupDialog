@@ -132,22 +132,22 @@ class ViewController: UIViewController {
         // Create the dialog
         let popup = PopupDialog(viewController: ratingVC,
                                 buttonAlignment: .horizontal,
-                                transitionStyle: .bounceDown,
+                                transitionStyle: .sheet,
                                 tapGestureDismissal: true,
                                 panGestureDismissal: false)
         
-        // Create first button
-        let buttonOne = CancelButton(title: "CANCEL", height: 60) {
-            self.label.text = "You canceled the rating dialog"
-        }
-
-        // Create second button
-        let buttonTwo = DefaultButton(title: "RATE", height: 60) {
-            self.label.text = "You rated \(ratingVC.cosmosStarRating.rating) stars"
-        }
-
-        // Add buttons to dialog
-        popup.addButtons([buttonOne, buttonTwo])
+//        // Create first button
+//        let buttonOne = CancelButton(title: "CANCEL", height: 60) {
+//            self.label.text = "You canceled the rating dialog"
+//        }
+//
+//        // Create second button
+//        let buttonTwo = DefaultButton(title: "RATE", height: 60) {
+//            self.label.text = "You rated \(ratingVC.cosmosStarRating.rating) stars"
+//        }
+//
+//        // Add buttons to dialog
+//        popup.addButtons([buttonOne, buttonTwo])
 
         // Present dialog
         present(popup, animated: animated, completion: nil)

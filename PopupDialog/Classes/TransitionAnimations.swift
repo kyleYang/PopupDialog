@@ -39,6 +39,7 @@ import UIKit
     case bounceDown
     case zoomIn
     case fadeIn
+    case sheet
 }
 
 /// Dialog bounces in from bottom and is dismissed to bottom
@@ -158,6 +159,36 @@ final internal class FadeTransition: TransitionAnimator {
         case .out:
             UIView.animate(withDuration: outDuration, delay: 0.0, options: [.curveEaseIn], animations: { [weak self] in
                 guard let self = self else { return }
+                self.from.view.alpha = 0.0
+            }, completion: { _ in
+                transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
+            })
+        }
+    }
+}
+
+final internal class SheetTransition: TransitionAnimator {
+
+    init(direction: AnimationDirection) {
+        super.init(inDuration: 0.4, outDuration: 0.35, direction: direction)
+    }
+
+    override func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
+        super.animateTransition(using: transitionContext)
+
+        switch direction {
+        case .in:
+            to.view.bounds.origin = CGPoint(x: 0, y: -from.view.bounds.size.height)
+            UIView.animate(withDuration: inDuration, delay: 0.0, options: [.curveEaseOut], animations: { [weak self] in
+                guard let self = self else { return }
+                self.to.view.bounds = self.from.view.bounds
+            }, completion: { _ in
+                transitionContext.completeTransition(true)
+            })
+        case .out:
+            UIView.animate(withDuration: outDuration, delay: 0.0, options: [.curveEaseIn], animations: { [weak self] in
+                guard let self = self else { return }
+                self.from.view.bounds.origin = CGPoint(x: 0, y: -self.from.view.bounds.size.height)
                 self.from.view.alpha = 0.0
             }, completion: { _ in
                 transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
