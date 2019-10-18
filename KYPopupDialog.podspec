@@ -1,5 +1,5 @@
 Pod::Spec.new do |s|
-  s.name             = 'PopupDialog'
+  s.name             = 'KYPopupDialog'
   s.version          = '1.1.1'
   s.summary          = 'A simple custom popup dialog view controller'
   s.homepage         = 'https://github.com/kyleYang/PopupDialog'
