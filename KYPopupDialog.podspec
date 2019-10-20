@@ -1,11 +1,11 @@
 Pod::Spec.new do |s|
   s.name             = 'KYPopupDialog'
-  s.version          = '1.1.1'
+  s.version          = '1.1.2'
   s.summary          = 'A simple custom popup dialog view controller'
   s.homepage         = 'https://github.com/kyleYang/PopupDialog'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'Martin Wildfeuer' => 'mwfire@mwfire.de' }
-  s.source           = { :git => 'https://gitlab.com/ssmodule/sandstone.git', :tag => s.version.to_s }
+  s.source           = { :git => 'https://github.com/kyleYang/PopupDialog.git', :tag => s.version.to_s }
   s.social_media_url = 'https://twitter.com/theMWFire'
 
   s.ios.deployment_target = '10.0'
