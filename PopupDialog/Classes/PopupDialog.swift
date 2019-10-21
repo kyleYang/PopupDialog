@@ -27,17 +27,16 @@ import Foundation
 import UIKit
 
 /// Creates a Popup dialog similar to UIAlertController
-final public class PopupDialog: UIViewController {
-
+public final class PopupDialog: UIViewController {
     // MARK: Private / Internal
 
     /// First init flag
     fileprivate var initialized = false
-    
+
     /// StatusBar display related
     fileprivate let hideStatusBar: Bool
     fileprivate var statusBarShouldBeHidden: Bool = false
-    
+
     /// Width for iPad displays
     fileprivate let preferredWidth: CGFloat
 
@@ -91,22 +90,21 @@ final public class PopupDialog: UIViewController {
      - returns: Popup dialog default style
      */
     @objc public convenience init(
-                title: String?,
-                message: String?,
-                image: UIImage? = nil,
-                buttonAlignment: NSLayoutConstraint.Axis = .vertical,
-                transitionStyle: PopupDialogTransitionStyle = .bounceUp,
-                preferredWidth: CGFloat = 340,
-                tapGestureDismissal: Bool = true,
-                panGestureDismissal: Bool = true,
-                hideStatusBar: Bool = false,
-                completion: (() -> Void)? = nil) {
-
+        title: String?,
+        message: String?,
+        image: UIImage? = nil,
+        buttonAlignment: NSLayoutConstraint.Axis = .vertical,
+        transitionStyle: PopupDialogTransitionStyle = .bounceUp,
+        preferredWidth: CGFloat = 340,
+        tapGestureDismissal: Bool = true,
+        panGestureDismissal: Bool = true,
+        hideStatusBar: Bool = false,
+        completion: (() -> Void)? = nil) {
         // Create and configure the standard popup dialog view
         let viewController = PopupDialogDefaultViewController()
-        viewController.titleText   = title
+        viewController.titleText = title
         viewController.messageText = message
-        viewController.image       = image
+        viewController.image = image
 
         // Call designated initializer
         self.init(viewController: viewController,
@@ -142,7 +140,6 @@ final public class PopupDialog: UIViewController {
         panGestureDismissal: Bool = true,
         hideStatusBar: Bool = false,
         completion: (() -> Void)? = nil) {
-
         self.viewController = viewController
         self.preferredWidth = preferredWidth
         self.hideStatusBar = hideStatusBar
@@ -158,7 +155,7 @@ final public class PopupDialog: UIViewController {
         // Define presentation styles
         transitioningDelegate = presentationManager
         modalPresentationStyle = .custom
-        
+
         // StatusBar setup
         modalPresentationCapturesStatusBarAppearance = true
 
@@ -182,8 +179,53 @@ final public class PopupDialog: UIViewController {
         }
     }
 
+    @objc public init(
+        sheetViewController: UIViewController,
+        tapGestureDismissal: Bool = true,
+        panGestureDismissal: Bool = true,
+        hideStatusBar: Bool = false,
+        completion: (() -> Void)? = nil) {
+        self.viewController = sheetViewController
+        self.hideStatusBar = hideStatusBar
+        self.completion = completion
+        self.preferredWidth = UIScreen.main.bounds.size.width
+        super.init(nibName: nil, bundle: nil)
+
+        // Init the presentation manager
+        presentationManager = PresentationManager(transitionStyle: .sheet, interactor: interactor)
+
+        // Assign the interactor view controller
+        interactor.viewController = self
+
+        // Define presentation styles
+        transitioningDelegate = presentationManager
+        modalPresentationStyle = .custom
+
+        // StatusBar setup
+        modalPresentationCapturesStatusBarAppearance = true
+
+        // Add our custom view to the container
+        addChild(viewController)
+        popupContainerView.sheetView = viewController.view
+        popupContainerView.buttonStackView.axis = .vertical
+        viewController.didMove(toParent: self)
+
+        // Allow for dialog dismissal on background tap
+        if tapGestureDismissal {
+            let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+            tapRecognizer.cancelsTouchesInView = false
+            popupContainerView.addGestureRecognizer(tapRecognizer)
+        }
+        // Allow for dialog dismissal on dialog pan gesture
+        if panGestureDismissal {
+            let panRecognizer = UIPanGestureRecognizer(target: interactor, action: #selector(InteractiveTransition.handlePan))
+            panRecognizer.cancelsTouchesInView = false
+            popupContainerView.stackView.addGestureRecognizer(panRecognizer)
+        }
+    }
+
     // Init with coder not implemented
-    required public init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -202,10 +244,10 @@ final public class PopupDialog: UIViewController {
         appendButtons()
         initialized = true
     }
-    
+
     public override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+
         statusBarShouldBeHidden = hideStatusBar
         UIView.animate(withDuration: 0.15) {
             self.setNeedsStatusBarAppearanceUpdate()
@@ -225,7 +267,6 @@ final public class PopupDialog: UIViewController {
     // MARK: - Dismissal related
 
     @objc fileprivate func handleTap(_ sender: UITapGestureRecognizer) {
-
         // Make sure it's not a tap on the dialog but the background
         let point = sender.location(in: popupContainerView.stackView)
         guard !popupContainerView.stackView.point(inside: point, with: nil) else { return }
@@ -236,7 +277,7 @@ final public class PopupDialog: UIViewController {
      Dismisses the popup dialog
      */
     @objc public func dismiss(_ completion: (() -> Void)? = nil) {
-        self.dismiss(animated: true) {
+        dismiss(animated: true) {
             completion?()
         }
     }
@@ -248,14 +289,13 @@ final public class PopupDialog: UIViewController {
      to the placeholder stack view
      */
     fileprivate func appendButtons() {
-        
         // Add action to buttons
         let stackView = popupContainerView.stackView
         let buttonStackView = popupContainerView.buttonStackView
         if buttons.isEmpty {
             stackView.removeArrangedSubview(popupContainerView.buttonStackView)
         }
-        
+
         for (index, button) in buttons.enumerated() {
             button.needsLeftSeparator = buttonStackView.axis == .horizontal && index > 0
             buttonStackView.addArrangedSubview(button)
@@ -282,7 +322,7 @@ final public class PopupDialog: UIViewController {
     /// Calls the action closure of the button instance tapped
     @objc fileprivate func buttonTapped(_ button: PopupDialogButton) {
         if button.dismissOnTap {
-            dismiss({ button.buttonAction?() })
+            dismiss { button.buttonAction?() }
         } else {
             button.buttonAction?()
         }
@@ -297,13 +337,13 @@ final public class PopupDialog: UIViewController {
         let button = buttons[index]
         button.buttonAction?()
     }
-    
+
     // MARK: - StatusBar display related
-    
+
     public override var prefersStatusBarHidden: Bool {
         return statusBarShouldBeHidden
     }
-    
+
     public override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
         return .slide
     }
@@ -312,14 +352,13 @@ final public class PopupDialog: UIViewController {
 // MARK: - View proxy values
 
 extension PopupDialog {
-
     /// The button alignment of the alert dialog
     @objc public var buttonAlignment: NSLayoutConstraint.Axis {
         get {
             return popupContainerView.buttonStackView.axis
         }
         set {
-            popupContainerView.buttonStackView .axis = newValue
+            popupContainerView.buttonStackView.axis = newValue
             popupContainerView.pv_layoutIfNeededAnimated()
         }
     }
@@ -334,7 +373,6 @@ extension PopupDialog {
 // MARK: - Shake
 
 extension PopupDialog {
-    
     /// Performs a shake animation on the dialog
     @objc public func shake() {
         popupContainerView.pv_shake()

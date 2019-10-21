@@ -1,6 +1,6 @@
 import XCTest
 import UIKit
-import PopupDialog
+import KYPopupDialog
 import FBSnapshotTestCase
 
 class SnapshotTests: FBSnapshotTestCase {

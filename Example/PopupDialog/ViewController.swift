@@ -24,7 +24,7 @@
 //
 
 import UIKit
-import PopupDialog
+import KYPopupDialog
 
 class ViewController: UIViewController {
 
@@ -130,11 +130,7 @@ class ViewController: UIViewController {
         let ratingVC = RatingViewController(nibName: nil, bundle: nil)
 
         // Create the dialog
-        let popup = PopupDialog(viewController: ratingVC,
-                                buttonAlignment: .horizontal,
-                                transitionStyle: .bounceDown,
-                                tapGestureDismissal: true,
-                                panGestureDismissal: false)
+        let popup = PopupDialog(sheetViewController: ratingVC)
         
         // Create first button
         let buttonOne = CancelButton(title: "CANCEL", height: 60) {

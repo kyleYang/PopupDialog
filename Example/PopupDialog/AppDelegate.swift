@@ -24,7 +24,7 @@
 //
 
 import UIKit
-import PopupDialog
+import KYPopupDialog
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

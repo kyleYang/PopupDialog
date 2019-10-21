@@ -1,7 +1,7 @@
 import UIKit
 import XCTest
 import Nimble
-@testable import PopupDialog
+@testable import KYPopupDialog
 
 class AppearanceTests: XCTestCase {
 
