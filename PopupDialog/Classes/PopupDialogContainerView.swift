@@ -136,7 +136,18 @@ public final class PopupDialogContainerView: UIView {
     }()
 
     //
-    public var sheetView: UIView?
+    public var sheetView: UIView? {
+        didSet {
+            shadowContainer.removeFromSuperview()
+            container.removeFromSuperview()
+            stackView.removeFromSuperview()
+            if let view = oldValue {
+                view.removeFromSuperview()
+            }
+            self.sheetView?.translatesAutoresizingMaskIntoConstraints = false
+            self.setupViews()
+        }
+    }
 
     // The preferred width for iPads
     fileprivate let preferredWidth: CGFloat
@@ -153,6 +164,13 @@ public final class PopupDialogContainerView: UIView {
         super.init(frame: frame)
         setupViews()
     }
+    
+    internal init(frame: CGRect, sheetView: UIView) {
+        self.sheetView = sheetView
+        self.preferredWidth = UIScreen.main.bounds.width
+        super.init(frame: frame)
+        setupViews()
+    }
 
     public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -162,12 +180,12 @@ public final class PopupDialogContainerView: UIView {
 
     internal func setupViews() {
         var constraints = [NSLayoutConstraint]()
-
+        
         if let view = sheetView {
             addSubview(shadowContainer)
             shadowContainer.addSubview(container)
             container.addSubview(view)
-            container.addSubview(stackView)
+//            container.addSubview(stackView)
 
             let views = ["shadowContainer": shadowContainer, "container": container, "stackView": stackView, "sheetView": view]
 
@@ -175,11 +193,11 @@ public final class PopupDialogContainerView: UIView {
             if UIDevice.current.userInterfaceIdiom == UIUserInterfaceIdiom.pad {
                 let metrics = ["preferredWidth": preferredWidth]
                 constraints += NSLayoutConstraint.constraints(withVisualFormat: "H:|-(>=40)-[shadowContainer(==preferredWidth@900)]-(>=40)-|", options: [], metrics: metrics, views: views)
+                constraints += [NSLayoutConstraint(item: shadowContainer, attribute: .centerX, relatedBy: .equal, toItem: self, attribute: .centerX, multiplier: 1, constant: 0)]
             } else {
                 constraints += NSLayoutConstraint.constraints(withVisualFormat: "H:|[shadowContainer]|", options: [], metrics: nil, views: views)
             }
-            constraints += [NSLayoutConstraint(item: shadowContainer, attribute: .centerX, relatedBy: .equal, toItem: self, attribute: .centerX, multiplier: 1, constant: 0)]
-            centerYConstraint = NSLayoutConstraint(item: shadowContainer, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: 0)
+            centerYConstraint = NSLayoutConstraint(item: shadowContainer, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0)
 
             if let centerYConstraint = centerYConstraint {
                 constraints.append(centerYConstraint)
@@ -190,9 +208,9 @@ public final class PopupDialogContainerView: UIView {
             constraints += NSLayoutConstraint.constraints(withVisualFormat: "V:|[container]|", options: [], metrics: nil, views: views)
 
             // Main stack view constraints
-            constraints += NSLayoutConstraint.constraints(withVisualFormat: "H:|[stackView]|", options: [], metrics: nil, views: views)
+//            constraints += NSLayoutConstraint.constraints(withVisualFormat: "H:|[stackView]|", options: [], metrics: nil, views: views)
             constraints += NSLayoutConstraint.constraints(withVisualFormat: "H:|[sheetView]|", options: [], metrics: nil, views: views)
-            constraints += NSLayoutConstraint.constraints(withVisualFormat: "V:|[sheetView][stackView]|", options: [], metrics: nil, views: views)
+            constraints += NSLayoutConstraint.constraints(withVisualFormat: "V:|[sheetView]|", options: [], metrics: nil, views: views)
 
         } else {
             // Add views

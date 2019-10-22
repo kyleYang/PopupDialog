@@ -19,11 +19,9 @@
 		C75C0D721E2EA11300CFC9F3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
 		C75C0D731E2EA17700CFC9F3 /* RatingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C79253481D33E2C600A0FCA1 /* RatingViewController.swift */; };
 		C75C0D741E2EA17D00CFC9F3 /* CosmosDistrib.swift in Sources */ = {isa = PBXBuildFile; fileRef = C792534C1D34E36D00A0FCA1 /* CosmosDistrib.swift */; };
-		C75C0D751E2EA2BF00CFC9F3 /* RatingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C79253491D33E2C600A0FCA1 /* RatingViewController.xib */; };
 		C75C0D761E2EA2CD00CFC9F3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		C75C0D771E2EA91400CFC9F3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		C792534A1D33E2C600A0FCA1 /* RatingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C79253481D33E2C600A0FCA1 /* RatingViewController.swift */; };
-		C792534B1D33E2C600A0FCA1 /* RatingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C79253491D33E2C600A0FCA1 /* RatingViewController.xib */; };
 		C792534D1D34E36D00A0FCA1 /* CosmosDistrib.swift in Sources */ = {isa = PBXBuildFile; fileRef = C792534C1D34E36D00A0FCA1 /* CosmosDistrib.swift */; };
 		C7A6674B1D3D030200DE5036 /* AppearanceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A667481D3D030200DE5036 /* AppearanceTests.swift */; };
 		C7A6674C1D3D030200DE5036 /* CustomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A667491D3D030200DE5036 /* CustomViewController.swift */; };
@@ -66,7 +64,6 @@
 		C705B8001E34D6FF00D042A3 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = ../UITests/Info.plist; sourceTree = SOURCE_ROOT; };
 		C75C0D6B1E2D81C700CFC9F3 /* FBSnapshotTestCase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSnapshotTestCase.framework; path = "../../../../../Library/Developer/Xcode/DerivedData/PopupDialog-hexsupsacuphwzepstdjnccrvfdy/Build/Products/Debug-iphonesimulator/FBSnapshotTestCase/FBSnapshotTestCase.framework"; sourceTree = "<group>"; };
 		C79253481D33E2C600A0FCA1 /* RatingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatingViewController.swift; sourceTree = "<group>"; };
-		C79253491D33E2C600A0FCA1 /* RatingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RatingViewController.xib; sourceTree = "<group>"; };
 		C792534C1D34E36D00A0FCA1 /* CosmosDistrib.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CosmosDistrib.swift; sourceTree = "<group>"; };
 		C7A667461D3D02ED00DE5036 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = ../../Tests/Info.plist; sourceTree = "<group>"; };
 		C7A667481D3D030200DE5036 /* AppearanceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppearanceTests.swift; path = ../Tests/AppearanceTests.swift; sourceTree = SOURCE_ROOT; };
@@ -149,7 +146,6 @@
 				607FACD71AFB9204008FA782 /* ViewController.swift */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
 				C79253481D33E2C600A0FCA1 /* RatingViewController.swift */,
-				C79253491D33E2C600A0FCA1 /* RatingViewController.xib */,
 				C792534C1D34E36D00A0FCA1 /* CosmosDistrib.swift */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
@@ -338,7 +334,6 @@
 				607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */,
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
-				C792534B1D33E2C600A0FCA1 /* RatingViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -347,7 +342,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C75C0D771E2EA91400CFC9F3 /* Images.xcassets in Resources */,
-				C75C0D751E2EA2BF00CFC9F3 /* RatingViewController.xib in Resources */,
 				C75C0D761E2EA2CD00CFC9F3 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

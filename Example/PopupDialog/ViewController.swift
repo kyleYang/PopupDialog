@@ -130,16 +130,15 @@ class ViewController: UIViewController {
         let ratingVC = RatingViewController(nibName: nil, bundle: nil)
 
         // Create the dialog
-        let popup = PopupDialog(sheetViewController: ratingVC)
-        
+        let popup = PopupDialog(viewController: ratingVC)
         // Create first button
-        let buttonOne = CancelButton(title: "CANCEL", height: 60) {
-            self.label.text = "You canceled the rating dialog"
+        let buttonOne = CancelButton(title: "CANCEL") {
+            self.label.text = "You canceled the default dialog"
         }
 
         // Create second button
-        let buttonTwo = DefaultButton(title: "RATE", height: 60) {
-//            self.label.text = "You rated \(ratingVC.cosmosStarRating.rating) stars"
+        let buttonTwo = DefaultButton(title: "OK") {
+            self.label.text = "You ok'd the default dialog"
         }
 
         // Add buttons to dialog
