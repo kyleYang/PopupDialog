@@ -138,14 +138,7 @@ public final class PopupDialogContainerView: UIView {
     //
     public var sheetView: UIView? {
         didSet {
-            shadowContainer.removeFromSuperview()
-            container.removeFromSuperview()
-            stackView.removeFromSuperview()
-            if let view = oldValue {
-                view.removeFromSuperview()
-            }
-            self.sheetView?.translatesAutoresizingMaskIntoConstraints = false
-            self.setupViews()
+            sheetView?.translatesAutoresizingMaskIntoConstraints = false
         }
     }
 
@@ -162,14 +155,6 @@ public final class PopupDialogContainerView: UIView {
     internal init(frame: CGRect, preferredWidth: CGFloat) {
         self.preferredWidth = preferredWidth
         super.init(frame: frame)
-        setupViews()
-    }
-    
-    internal init(frame: CGRect, sheetView: UIView) {
-        self.sheetView = sheetView
-        self.preferredWidth = UIScreen.main.bounds.width
-        super.init(frame: frame)
-        setupViews()
     }
 
     public required init?(coder aDecoder: NSCoder) {
@@ -178,14 +163,14 @@ public final class PopupDialogContainerView: UIView {
 
     // MARK: - View setup
 
-    internal func setupViews() {
+    public func setupViews() {
         var constraints = [NSLayoutConstraint]()
-        
+
         if let view = sheetView {
             addSubview(shadowContainer)
             shadowContainer.addSubview(container)
             container.addSubview(view)
-//            container.addSubview(stackView)
+            container.addSubview(stackView)
 
             let views = ["shadowContainer": shadowContainer, "container": container, "stackView": stackView, "sheetView": view]
 
@@ -197,8 +182,7 @@ public final class PopupDialogContainerView: UIView {
             } else {
                 constraints += NSLayoutConstraint.constraints(withVisualFormat: "H:|[shadowContainer]|", options: [], metrics: nil, views: views)
             }
-            centerYConstraint = NSLayoutConstraint(item: shadowContainer, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0)
-
+             centerYConstraint = NSLayoutConstraint(item: shadowContainer, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: 0)
             if let centerYConstraint = centerYConstraint {
                 constraints.append(centerYConstraint)
             }
@@ -208,9 +192,9 @@ public final class PopupDialogContainerView: UIView {
             constraints += NSLayoutConstraint.constraints(withVisualFormat: "V:|[container]|", options: [], metrics: nil, views: views)
 
             // Main stack view constraints
-//            constraints += NSLayoutConstraint.constraints(withVisualFormat: "H:|[stackView]|", options: [], metrics: nil, views: views)
+            constraints += NSLayoutConstraint.constraints(withVisualFormat: "H:|[stackView]|", options: [], metrics: nil, views: views)
             constraints += NSLayoutConstraint.constraints(withVisualFormat: "H:|[sheetView]|", options: [], metrics: nil, views: views)
-            constraints += NSLayoutConstraint.constraints(withVisualFormat: "V:|[sheetView]|", options: [], metrics: nil, views: views)
+            constraints += NSLayoutConstraint.constraints(withVisualFormat: "V:|[sheetView][stackView]|", options: [], metrics: nil, views: views)
 
         } else {
             // Add views
@@ -244,7 +228,7 @@ public final class PopupDialogContainerView: UIView {
             constraints += NSLayoutConstraint.constraints(withVisualFormat: "V:|[stackView]|", options: [], metrics: nil, views: views)
 
             // Activate constraints
-            NSLayoutConstraint.activate(constraints)
         }
+        NSLayoutConstraint.activate(constraints)
     }
 }

@@ -9,7 +9,6 @@
 import UIKit
 
 class RatingViewController: UIViewController {
-
 //    @IBOutlet weak var cosmosStarRating: CosmosView!
 
 //    @IBOutlet weak var commentTextField: UITextField!
@@ -17,9 +16,20 @@ class RatingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let subView = UIView(frame: CGRect(x: 0, y:100, width: self.view.frame.size.width, height: self.view.frame.size.height-100))
+        let subView = UIView(frame: CGRect(x: 0, y: self.view.frame.size.height - 300, width: self.view.frame.size.width, height: 300))
+        subView.backgroundColor = UIColor.red
+        subView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(subView)
-        
+        self.view.backgroundColor = .yellow
+
+        // Layout views
+        let views = ["subView": subView] as [String: Any]
+        var constraints = [NSLayoutConstraint]()
+
+        constraints += NSLayoutConstraint.constraints(withVisualFormat: "H:|[subView]|", options: [], metrics: nil, views: views)
+        constraints += NSLayoutConstraint.constraints(withVisualFormat: "V:|[subView(100)]|", options: [], metrics: nil, views: views)
+        NSLayoutConstraint.activate(constraints)
+
 //        commentTextField.delegate = self
 //        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(endEditing)))
     }
@@ -35,9 +45,8 @@ class RatingViewController: UIViewController {
 }
 
 extension RatingViewController: UITextFieldDelegate {
-
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        endEditing()
+        self.endEditing()
         return true
     }
 }

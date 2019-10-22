@@ -163,6 +163,7 @@ public final class PopupDialog: UIViewController {
         addChild(viewController)
         popupContainerView.stackView.insertArrangedSubview(viewController.view, at: 0)
         popupContainerView.buttonStackView.axis = buttonAlignment
+        popupContainerView.setupViews()
         viewController.didMove(toParent: self)
 
         // Allow for dialog dismissal on background tap
@@ -208,6 +209,7 @@ public final class PopupDialog: UIViewController {
         addChild(viewController)
         popupContainerView.sheetView = viewController.view
         popupContainerView.buttonStackView.axis = .vertical
+        popupContainerView.setupViews()
         viewController.didMove(toParent: self)
 
         // Allow for dialog dismissal on background tap
